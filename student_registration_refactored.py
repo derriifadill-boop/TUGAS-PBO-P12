@@ -18,7 +18,7 @@ class IValidationRule(ABC):
     """
 
     @abstractmethod
-    def validate(self,  Dict[str, Any]) -> tuple[bool, str]:
+    def validate(self, data: Dict[str, Any]) -> tuple[bool, str]:
         """Memvalidasi data mahasiswa berdasarkan aturan spesifik.
 
         Args:
@@ -49,7 +49,7 @@ class SksLimitRule(IValidationRule):
         """
         self.max_sks = max_sks
 
-    def validate(self,  Dict[str, Any]) -> tuple[bool, str]:
+    def validate(self, data: Dict[str, Any]) -> tuple[bool, str]:
         """Memeriksa apakah total SKS melebihi batas.
 
         Args:
@@ -69,7 +69,7 @@ class SksLimitRule(IValidationRule):
 class PrerequisiteRule(IValidationRule):
     """Aturan validasi untuk memastikan prasyarat mata kuliah terpenuhi."""
 
-    def validate(self,  Dict[str, Any]) -> tuple[bool, str]:
+    def validate(self, data: Dict[str, Any]) -> tuple[bool, str]:
         """Memeriksa kelengkapan prasyarat untuk setiap mata kuliah yang diambil.
 
         Args:
@@ -90,7 +90,7 @@ class PrerequisiteRule(IValidationRule):
 class JadwalBentrokRule(IValidationRule):
     """Aturan validasi untuk mendeteksi bentrok jadwal mata kuliah."""
 
-    def validate(self,  Dict[str, Any]) -> tuple[bool, str]:
+    def validate(self, data: Dict[str, Any]) -> tuple[bool, str]:
         """Memeriksa tumpang tindih jadwal antar mata kuliah.
 
         Format jadwal diharapkan: "Hari JamMulai-JamSelesai", contoh: "Senin 08:00-10:00".
@@ -146,7 +146,7 @@ class RegistrationService:
         """
         self.rules = rules
 
-    def validate_registration(self, student_ Dict[str, Any]) -> bool:
+    def validate_registration(self, student_data: Dict[str, Any]) -> bool:
         """Menjalankan semua aturan validasi secara berurutan.
 
         Validasi berhenti saat pertama kali gagal.
